@@ -59,6 +59,12 @@ public class ListingActivity : Activity
 
             string item = Console.ReadLine();
 
+            // Check if time expired while the user was typing
+            if (DateTime.Now > endTime)
+            {
+                break;
+            }
+
             if (!string.IsNullOrWhiteSpace(item))
             {
                 userItems.Add(item);

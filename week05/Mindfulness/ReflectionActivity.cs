@@ -5,6 +5,7 @@ public class ReflectionActivity : Activity
 {
     private List<string> _prompts;
     private List<string> _questions;
+    private List<string> _unusedQuestions;
     private Random _random;
 
     // Constructor
@@ -35,6 +36,9 @@ public class ReflectionActivity : Activity
             "What did you learn about yourself through this experience?",
             "How can you keep this experience in mind in the future?"
         };
+
+        // Copy all questions so each one is used once before repeating
+        _unusedQuestions = new List<string>(_questions);
     }
 
     // Returns a random prompt
@@ -44,14 +48,24 @@ public class ReflectionActivity : Activity
         return _prompts[index];
     }
 
-    // Returns a random question
+    // Returns a random question without repeating until all have been used
     private string GetRandomQuestion()
     {
-        int index = _random.Next(_questions.Count);
-        return _questions[index];
+        if (_unusedQuestions.Count == 0)
+        {
+            _unusedQuestions = new List<string>(_questions);
+        }
+
+        int index = _random.Next(_unusedQuestions.Count);
+
+        string question = _unusedQuestions[index];
+
+        _unusedQuestions.RemoveAt(index);
+
+        return question;
     }
 
-    // Runs the reflection activity
+    // Runs the activity
     public void Run()
     {
         DisplayStartingMessage();

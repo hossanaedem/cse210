@@ -3,9 +3,11 @@ using System.Threading;
 
 public class Activity
 {
-    // Protected so derived classes can use them directly
-    protected string _name;
-    protected string _description;
+    // Only used within this class
+    private string _name;
+    private string _description;
+
+    // Used by derived classes
     protected int _duration;
 
     // Constructor
@@ -26,7 +28,11 @@ public class Activity
         Console.WriteLine();
 
         Console.Write("How long, in seconds, would you like for your session? ");
-        _duration = int.Parse(Console.ReadLine());
+
+        while (!int.TryParse(Console.ReadLine(), out _duration) || _duration <= 0)
+        {
+            Console.Write("Please enter a valid positive number: ");
+        }
 
         Console.WriteLine();
         Console.WriteLine("Prepare to begin...");
@@ -46,25 +52,25 @@ public class Activity
     }
 
     // Spinner animation
-    public void ShowSpinner(int seconds)
+    protected void ShowSpinner(int seconds)
     {
         string[] spinner = { "|", "/", "-", "\\" };
 
         DateTime endTime = DateTime.Now.AddSeconds(seconds);
 
-        int i = 0;
+        int index = 0;
 
         while (DateTime.Now < endTime)
         {
-            Console.Write(spinner[i]);
+            Console.Write(spinner[index]);
             Thread.Sleep(250);
             Console.Write("\b \b");
 
-            i++;
+            index++;
 
-            if (i >= spinner.Length)
+            if (index >= spinner.Length)
             {
-                i = 0;
+                index = 0;
             }
         }
 
@@ -72,7 +78,7 @@ public class Activity
     }
 
     // Countdown animation
-    public void ShowCountdown(int seconds)
+    protected void ShowCountdown(int seconds)
     {
         for (int i = seconds; i > 0; i--)
         {
@@ -83,4 +89,8 @@ public class Activity
 
         Console.WriteLine();
     }
+    public int GetDuration()
+{
+    return _duration;
+}
 }

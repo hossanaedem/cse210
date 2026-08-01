@@ -5,26 +5,31 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Creativity:
-        // This program exceeds the core requirements by keeping track of
-        // all activities completed during the session. When the user exits,
-        // the program displays the total number of completed activities
-        // along with the names of the activities completed.
+        /*
+         * Creativity:
+         * This program exceeds the core requirements by:
+         * 1. Keeping a history of every activity completed.
+         * 2. Tracking the total number of activities completed.
+         * 3. Tracking the total amount of time spent practicing mindfulness
+         *    during the current session.
+         */
 
-        bool running = true;
+        bool isRunning = true;
 
         int activitiesCompleted = 0;
+        int totalMindfulnessTime = 0;
 
         List<string> activityHistory = new List<string>();
 
-        while (running)
+        while (isRunning)
         {
             Console.Clear();
 
-            Console.WriteLine("=========================================");
+            Console.WriteLine("=======================================");
             Console.WriteLine("        Mindfulness Program");
-            Console.WriteLine("=========================================");
+            Console.WriteLine("=======================================");
             Console.WriteLine();
+
             Console.WriteLine("Menu Options:");
             Console.WriteLine("1. Start Breathing Activity");
             Console.WriteLine("2. Start Reflection Activity");
@@ -33,51 +38,53 @@ class Program
             Console.WriteLine();
 
             Console.Write("Select a choice from the menu: ");
-
             string choice = Console.ReadLine();
 
             switch (choice)
             {
                 case "1":
 
-                    BreathingActivity breathing = new BreathingActivity();
-                    breathing.Run();
+                    BreathingActivity breathingActivity = new BreathingActivity();
+                    breathingActivity.Run();
 
                     activitiesCompleted++;
+                    totalMindfulnessTime += breathingActivity.GetDuration();
                     activityHistory.Add("Breathing Activity");
 
                     break;
 
                 case "2":
 
-                    ReflectionActivity reflection = new ReflectionActivity();
-                    reflection.Run();
+                    ReflectionActivity reflectionActivity = new ReflectionActivity();
+                    reflectionActivity.Run();
 
                     activitiesCompleted++;
+                    totalMindfulnessTime += reflectionActivity.GetDuration();
                     activityHistory.Add("Reflection Activity");
 
                     break;
 
                 case "3":
 
-                    ListingActivity listing = new ListingActivity();
-                    listing.Run();
+                    ListingActivity listingActivity = new ListingActivity();
+                    listingActivity.Run();
 
                     activitiesCompleted++;
+                    totalMindfulnessTime += listingActivity.GetDuration();
                     activityHistory.Add("Listing Activity");
 
                     break;
 
                 case "4":
 
-                    running = false;
+                    isRunning = false;
 
                     break;
 
                 default:
 
                     Console.WriteLine();
-                    Console.WriteLine("Invalid option. Please try again.");
+                    Console.WriteLine("Invalid choice. Please try again.");
                     Console.WriteLine("Press Enter to continue...");
                     Console.ReadLine();
 
@@ -87,25 +94,33 @@ class Program
 
         Console.Clear();
 
-        Console.WriteLine("=========================================");
-        Console.WriteLine("      Session Summary");
-        Console.WriteLine("=========================================");
+        Console.WriteLine("=======================================");
+        Console.WriteLine("         SESSION SUMMARY");
+        Console.WriteLine("=======================================");
         Console.WriteLine();
 
-        Console.WriteLine($"Activities Completed: {activitiesCompleted}");
+        Console.WriteLine($"Activities Completed : {activitiesCompleted}");
+        Console.WriteLine($"Total Mindfulness Time : {totalMindfulnessTime} seconds");
 
-        if (activitiesCompleted > 0)
+        Console.WriteLine();
+
+        if (activityHistory.Count > 0)
         {
-            Console.WriteLine();
             Console.WriteLine("Activities Performed:");
 
-            foreach (string activity in activityHistory)
+            for (int i = 0; i < activityHistory.Count; i++)
             {
-                Console.WriteLine($"- {activity}");
+                Console.WriteLine($"{i + 1}. {activityHistory[i]}");
             }
+        }
+        else
+        {
+            Console.WriteLine("No activities were completed.");
         }
 
         Console.WriteLine();
         Console.WriteLine("Thank you for using the Mindfulness Program!");
+        Console.WriteLine("Press Enter to exit...");
+        Console.ReadLine();
     }
 }

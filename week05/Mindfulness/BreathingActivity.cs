@@ -13,7 +13,6 @@ public class BreathingActivity : Activity
     // Runs the breathing activity
     public void Run()
     {
-        // Display the common starting message
         DisplayStartingMessage();
 
         Console.Clear();
@@ -34,11 +33,9 @@ public class BreathingActivity : Activity
 
             Console.Write("Breathe out... ");
             ShowCountdown(6);
-
             Console.WriteLine();
         }
 
-        // Display the common ending message
         DisplayEndingMessage();
     }
 }
