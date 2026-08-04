@@ -1,0 +1,4 @@
+0
+SimpleGoal|Wake Up Early|Waking up early every day|50|False
+EternalGoal|Sacrament Meeting|Attending sacrament meeting every week|50
+ChecklistGoal|Meals|Breakfast, Lunch and Dinner|100|500|3|0
